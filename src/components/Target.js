@@ -10,7 +10,7 @@ const TARGET_RADIUS = 50;
 /**
  * Styles
  */
-const Hitbox = styled('div')(({ x, y }) => ({
+const Indicator = styled('div')(({ x, y }) => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -69,7 +69,7 @@ const Target = () => {
   }, []);
 
   return isTargetFound ? ( // only show target if within range
-    <Hitbox
+    <Indicator
       x={store.targetPos[0]}
       y={store.targetPos[1]}
       onClick={onClickTarget}

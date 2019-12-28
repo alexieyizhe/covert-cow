@@ -15,6 +15,13 @@
     "rules": {
       "indent": [
         "warn",
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "react/jsx-indent-props": [
+        2,
         2
       ]
     }

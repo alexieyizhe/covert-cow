@@ -11,7 +11,13 @@
     "lint": "eslint src"
   },
   "eslintConfig": {
-    "extends": "eslint-config-synacor"
+    "extends": "eslint-config-synacor",
+    "rules": {
+      "indent": [
+        "warn",
+        2
+      ]
+    }
   },
   "eslintIgnore": [
     "build/*"

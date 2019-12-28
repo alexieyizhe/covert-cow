@@ -11,57 +11,70 @@ const TARGET_RADIUS = 50;
  * Styles
  */
 const Hitbox = styled('div')(({ x, y }) => ({
-	position: 'absolute',
-	top: 0,
-	left: 0,
-	width: `${TARGET_RADIUS * 2}px`,
-	height: `${TARGET_RADIUS * 2}px`,
-	borderRadius: '50%',
-	cursor: 'pointer',
-	transform: `translate(${x - TARGET_RADIUS}px, ${y - TARGET_RADIUS}px)`,
-	backgroundColor: 'red' // TODO: remove this
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: `${TARGET_RADIUS * 2}px`,
+  height: `${TARGET_RADIUS * 2}px`,
+  borderRadius: '50%',
+  cursor: 'pointer',
+  transform: `translate(${x - TARGET_RADIUS}px, ${y - TARGET_RADIUS}px)`,
+  backgroundColor: 'red' // TODO: remove this
 }));
 
 /**
  * Component
  */
 const Target = () => {
-	const store = useAppStore();
+  const store = useAppStore();
 
-	/**
+  /**
    * Check if the player is within range of the target.
    */
-	const isTargetFound = useComputed(() => {
-		const playerTargetDistance = Math.sqrt(
-			(store.playerPos[0] - store.targetPos[0]) ** 2 +
+  const isTargetFound = useComputed(() => {
+    const playerTargetDistance = Math.sqrt(
+      (store.playerPos[0] - store.targetPos[0]) ** 2 +
         (store.playerPos[1] - store.targetPos[1]) ** 2
-		);
-		console.log(playerTargetDistance, [...store.playerPos], store.targetPos);
+    );
+    console.log(playerTargetDistance, [...store.playerPos], store.targetPos);
 
-		return playerTargetDistance < TARGET_RADIUS; // if player is within `N`px of target
-	});
+    return playerTargetDistance < TARGET_RADIUS; // if player is within `N`px of target
+  });
 
-	const onClickTarget = action(() => {
-		store.gameState = GameState.FINISHED;
-	});
+  const onClickTarget = action(() => {
+    store.gameState = GameState.FINISHED;
+  });
 
-	/**
+  /**
    * Randomly generate target relative position at the start of the game.
    */
-	useEffect(
-		action(() => {
-			store.targetRelativePos = [Math.random(), Math.random()];
-		}),
-		[]
-	);
+  useEffect(
+    action(() => {
+      store.targetRelativePos = [Math.random(), Math.random()];
+    }),
+    []
+  );
 
-	return isTargetFound ? ( // only show target if within range
-		<Hitbox
-			x={store.targetPos[0]}
-			y={store.targetPos[1]}
-			onClick={onClickTarget}
-		/>
-	) : null;
+  /**
+   * Update window size on resize so that target stays in viewport.
+   */
+  useEffect(() => {
+    const onResize = action(() => {
+      store.windowSize = [window.innerWidth, window.innerHeight];
+    });
+
+    window.addEventListener('resize', onResize);
+
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  return isTargetFound ? ( // only show target if within range
+    <Hitbox
+      x={store.targetPos[0]}
+      y={store.targetPos[1]}
+      onClick={onClickTarget}
+    />
+  ) : null;
 };
 
 export default observer(Target);

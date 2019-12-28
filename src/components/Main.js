@@ -46,6 +46,7 @@ const Main = () => {
 			return (
 				<div>
 					<p>game FINISHED</p>
+					<button onClick={onClickStart}>play again</button>
 				</div>
 			);
 

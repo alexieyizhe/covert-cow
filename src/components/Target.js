@@ -3,7 +3,7 @@ import { useComputed, observer } from 'mobx-react-lite';
 import { styled } from 'goober';
 import { action } from 'mobx';
 
-import { useAppStore } from '../store';
+import { useAppStore, GameState } from '../store';
 
 const TARGET_RADIUS = 50;
 
@@ -19,7 +19,7 @@ const Hitbox = styled('div')(({ x, y }) => ({
 	borderRadius: '50%',
 	cursor: 'pointer',
 	transform: `translate(${x - TARGET_RADIUS}px, ${y - TARGET_RADIUS}px)`,
-	backgroundColor: 'red'
+	backgroundColor: 'red' // TODO: remove this
 }));
 
 /**
@@ -41,6 +41,10 @@ const Target = () => {
 		return playerTargetDistance < TARGET_RADIUS; // if player is within `N`px of target
 	});
 
+	const onClickTarget = action(() => {
+		store.gameState = GameState.FINISHED;
+	});
+
 	/**
    * Randomly generate target relative position at the start of the game.
    */
@@ -52,7 +56,11 @@ const Target = () => {
 	);
 
 	return isTargetFound ? ( // only show target if within range
-		<Hitbox x={store.targetPos[0]} y={store.targetPos[1]} />
+		<Hitbox
+			x={store.targetPos[0]}
+			y={store.targetPos[1]}
+			onClick={onClickTarget}
+		/>
 	) : null;
 };
 

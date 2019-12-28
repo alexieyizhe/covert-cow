@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "goober": "^1.6.1",
+    "mobx": "^5.15.1",
+    "mobx-react-lite": "^1.5.2",
     "preact": "^10.1.0",
     "preact-render-to-string": "^5.1.2"
   }

@@ -1,19 +1,15 @@
-import { Component, h } from 'preact';
-import { styled, setPragma } from 'goober';
+import { h } from 'preact';
+import { setPragma } from 'goober';
+
+import { AppStateProvider } from './state';
+import Main from './components/Main';
 
 setPragma(h);
 
-const Title = styled('h1')`
-  color: lightblue;
-  text-align: center;
-`;
+const App = () => (
+	<AppStateProvider>
+		<Main />
+	</AppStateProvider>
+);
 
-export default class App extends Component {
-	render() {
-		return (
-			<div>
-				<Title>Hello, World!</Title>
-			</div>
-		);
-	}
-}
+export default App;

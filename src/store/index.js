@@ -14,7 +14,7 @@ export const GameState = {
 export const createStore = () => ({
 	gameState: GameState.INITIAL,
 	playerPos: [0, 0],
-	targetRelativePos: [0.2, 0.2],
+	targetRelativePos: [-1, -1],
 
 	get targetPos() {
 		return [

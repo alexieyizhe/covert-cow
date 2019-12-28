@@ -14,7 +14,7 @@ export const GameState = {
 export const createStore = () => ({
 	gameState: GameState.INITIAL,
 	playerPos: [0, 0],
-	targetRelativePos: [0, 0],
+	targetRelativePos: [0.2, 0.2],
 
 	get targetPos() {
 		return [
@@ -35,4 +35,12 @@ export const AppStoreProvider = ({ children }) => {
 	return <AppContext.Provider value={store}>{children}</AppContext.Provider>;
 };
 
-export const useAppStore = () => useContext(AppContext);
+export const useAppStore = () => {
+	const store = useContext(AppContext);
+
+	if (!store) {
+		throw new Error('Component is not under a provider');
+	}
+
+	return store;
+};

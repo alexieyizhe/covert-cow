@@ -1,15 +1,15 @@
-import { h } from 'preact';
-import { setPragma } from 'goober';
+import { h } from "preact";
+import { setPragma } from "goober";
 
-import { AppStateProvider } from './state';
-import Main from './components/Main';
+import { AppStoreProvider } from "./store";
+import Main from "./components/Main";
 
 setPragma(h);
 
 const App = () => (
-	<AppStateProvider>
-		<Main />
-	</AppStateProvider>
+  <AppStoreProvider>
+    <Main />
+  </AppStoreProvider>
 );
 
 export default App;

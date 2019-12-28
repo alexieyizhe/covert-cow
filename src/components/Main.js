@@ -2,7 +2,9 @@ import { styled } from 'goober';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-import { GameState, useAppState } from '../state';
+import { GameState, useAppStore } from '../store';
+import Player from './Player';
+import Target from './Target';
 
 /**
  * Styles
@@ -16,9 +18,9 @@ const Title = styled('h1')`
  * Component
  */
 const Main = () => {
-	const store = useAppState();
+	const store = useAppStore();
 
-	const startGame = action(() => {
+	const onClickStart = action(() => {
 		store.gameState = GameState.RUNNING;
 	});
 
@@ -27,7 +29,7 @@ const Main = () => {
 			return (
 				<div>
 					<Title>hello this is a work in progress</Title>
-					<button onClick={startGame}>start game</button>
+					<button onClick={onClickStart}>start game</button>
 				</div>
 			);
 
@@ -35,6 +37,8 @@ const Main = () => {
 			return (
 				<div>
 					<p>game started</p>
+					<Player />
+					<Target />
 				</div>
 			);
 

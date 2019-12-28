@@ -4,17 +4,20 @@ import { observer } from 'mobx-react-lite';
 
 import { useAppStore } from '../store';
 
+/**
+ * Component
+ */
 const Player = () => {
 	const store = useAppStore();
 
 	const internalMousePos = useRef([0, 0]);
 
 	/**
-   * Compute
+   * Compute cursor position to update internal player position.
    */
 	useEffect(() => {
 		const mouseListener = e => {
-			const mousePos = [
+			const curMousePos = [
 				window.Event
 					? e.pageX
 					: event.clientX +
@@ -29,7 +32,7 @@ const Player = () => {
             	: document.body.scrollTop)
 			];
 
-			internalMousePos.current = mousePos;
+			internalMousePos.current = curMousePos;
 		};
 
 		document.addEventListener('mousemove', mouseListener);
@@ -37,11 +40,16 @@ const Player = () => {
 		return () => document.removeEventListener('mousemove', mouseListener);
 	}, []);
 
+	/**
+   * Update player position at a set interval for target detection.
+   */
 	useEffect(() => {
-		const playerUpdater = setInterval(() => {
-			console.log('updating position', internalMousePos.current);
-			store.playerPos = internalMousePos.current;
-		}, 1000);
+		const playerUpdater = setInterval(
+			action(() => {
+				store.playerPos = internalMousePos.current;
+			}),
+			1000
+		);
 
 		return () => clearInterval(playerUpdater);
 	}, []);

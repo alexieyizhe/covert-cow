@@ -1,12 +1,14 @@
-import { useEffect } from 'preact/hooks';
+import { useEffect, useRef } from 'preact/hooks';
 import { useComputed, observer } from 'mobx-react-lite';
 import { styled } from 'goober';
 import { action } from 'mobx';
 
 import { useAppStore, GameState } from 'store';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { audioCtx, playSound } from 'audio';
 
 const TARGET_RADIUS = 50;
+const TARGET_Z_POS = 300;
 
 /**
  * Styles
@@ -29,6 +31,7 @@ const Indicator = styled('div')(({ x, y }) => ({
 const Target = () => {
   const store = useAppStore();
   const curWindowSize = useWindowSize();
+  const audioPanner = useRef(null);
 
   /**
    * Check if the player is within range of the target.
@@ -67,13 +70,51 @@ const Target = () => {
     [curWindowSize]
   );
 
-  return isTargetFound ? ( // only show target if within range
-    <Indicator
-      x={store.targetPos[0]}
-      y={store.targetPos[1]}
-      onClick={onClickTarget}
-    />
-  ) : null;
+  /**
+   * Audio stuff
+   */
+  useEffect(() => {
+    const listener = audioCtx.listener;
+    listener.positionZ.value = TARGET_Z_POS - 5; // place listener in front of target
+
+    audioPanner.current = new PannerNode(audioCtx, {
+      panningModel: 'HRTF',
+      distanceModel: 'linear',
+      positionX: store.targetPos[0],
+      positionY: store.targetPos[1],
+      positionZ: TARGET_Z_POS,
+      orientationX: 0,
+      orientationY: 0,
+      orientationZ: -1, // have the audio source facing the user
+      refDistance: 1,
+      maxDistance: 10000,
+      rolloffFactor: 100,
+      coneInnerAngle: 60,
+      coneOuterAngle: 90,
+      coneOuterGain: 0.3
+    });
+
+    const intervalCallback = () => {
+      playSound(audioPanner.current);
+    };
+
+    setInterval(intervalCallback, 500);
+
+    return () => clearInterval(intervalCallback);
+  }, []);
+
+  return (
+    <>
+      {isTargetFound ? ( // only show target if within range
+        <Indicator
+          x={store.targetPos[0]}
+          y={store.targetPos[1]}
+          onClick={onClickTarget}
+        />
+      ) : null}
+      <audio />
+    </>
+  );
 };
 
 export default observer(Target);

@@ -47,6 +47,7 @@ const Player = () => {
   useEffect(() => {
     const playerUpdater = setInterval(
       action(() => {
+        // update player position
         store.playerPos = internalMousePos.current;
 
         // update audio listener position to reflect new player position
@@ -54,7 +55,7 @@ const Player = () => {
         listener.positionX.value = internalMousePos.current[0];
         listener.positionY.value = internalMousePos.current[1];
       }),
-      1000
+      500
     );
 
     return () => clearInterval(playerUpdater);

@@ -5,7 +5,7 @@ import { action } from 'mobx';
 
 import { useAppStore, GameState } from 'store';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { audioCtx, playSound } from 'audio';
+import { audioCtx, audioGainNode, playSound } from 'audio';
 
 const TARGET_RADIUS = 50;
 const TARGET_Z_POS = 300;
@@ -33,18 +33,19 @@ const Target = () => {
   const curWindowSize = useWindowSize();
   const audioPanner = useRef(null);
 
+  const playerTargetDistance = useComputed(
+    () =>
+      Math.sqrt(
+        (store.playerPos[0] - store.targetPos[0]) ** 2 +
+          (store.playerPos[1] - store.targetPos[1]) ** 2
+      ),
+    []
+  );
+
   /**
    * Check if the player is within range of the target.
    */
-  const isTargetFound = useComputed(() => {
-    const playerTargetDistance = Math.sqrt(
-      (store.playerPos[0] - store.targetPos[0]) ** 2 +
-        (store.playerPos[1] - store.targetPos[1]) ** 2
-    );
-    console.log(playerTargetDistance, [...store.playerPos], store.targetPos);
-
-    return playerTargetDistance < TARGET_RADIUS; // if player is within `N`px of target
-  });
+  const isTargetFound = playerTargetDistance < TARGET_RADIUS; // if player is within `N`px of target
 
   const onClickTarget = action(() => {
     store.gameState = GameState.FINISHED;
@@ -71,7 +72,7 @@ const Target = () => {
   );
 
   /**
-   * Audio stuff
+   * Set up audio source
    */
   useEffect(() => {
     const listener = audioCtx.listener;
@@ -93,15 +94,21 @@ const Target = () => {
       coneOuterAngle: 90,
       coneOuterGain: 0.3
     });
-
-    const intervalCallback = () => {
-      playSound(audioPanner.current);
-    };
-
-    setInterval(intervalCallback, 500);
-
-    return () => clearInterval(intervalCallback);
   }, []);
+
+  /**
+   * Play sound every .5 seconds
+   */
+  useEffect(() => {
+    playSound(audioPanner.current);
+
+    const soundVal =
+      (((Math.max(curWindowSize[0], curWindowSize[1]) - playerTargetDistance) /
+        Math.max(curWindowSize[0], curWindowSize[1])) *
+        3) **
+      4;
+    audioGainNode.gain.value = Math.min(70, Math.max(10, soundVal)); // clamp between 70 and 10
+  }, [playerTargetDistance]);
 
   return (
     <>

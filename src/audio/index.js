@@ -10,7 +10,7 @@ try {
   audioCtx = new AudioContext();
   audioGainNode = audioCtx.createGain();
 } catch (e) {
-  console.error('Web Audio API is not supported in this browser');
+  console.error('Web Audio API is not supported in this browser!');
 }
 
 const request = new XMLHttpRequest();
@@ -28,7 +28,7 @@ request.send();
 
 export const playSound = panner => {
   if (!soundLoaded) {
-    console.log('sound not loaded');
+    console.error('Sound not loaded!');
     return false;
   }
 

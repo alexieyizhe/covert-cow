@@ -35,3 +35,11 @@
       - mobx computed value
     - px location in the window of cursor
   - side effect (autorun) when cursor location is updated to fire target noise
+
+##### Todo:
+
+- add audio cues
+- add 3d audio
+- make it pretty
+- SEO and assets stuff
+- ???

@@ -2,11 +2,22 @@ import { styled } from 'goober';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-import { GameState, useAppState } from '../state';
+import { GameState, useAppStore } from 'store';
+import Player from 'components/Player';
+import Target from 'components/Target';
+import Card from 'components/Card';
 
 /**
  * Styles
  */
+const Container = styled('div')`
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+`;
+
 const Title = styled('h1')`
   color: lightblue;
   text-align: center;
@@ -16,38 +27,45 @@ const Title = styled('h1')`
  * Component
  */
 const Main = () => {
-	const store = useAppState();
+  const store = useAppStore();
 
-	const startGame = action(() => {
-		store.gameState = GameState.RUNNING;
-	});
+  const onClickStart = action(() => {
+    store.gameState = GameState.RUNNING;
+  });
 
-	switch (store.gameState) {
-		case GameState.INITIAL:
-			return (
-				<div>
-					<Title>hello this is a work in progress</Title>
-					<button onClick={startGame}>start game</button>
-				</div>
-			);
+  switch (store.gameState) {
+    case GameState.INITIAL:
+      return (
+        <Container>
+          <Card>
+            <Title>hello this is a work in progress</Title>
+            <button onClick={onClickStart}>Start</button>
+          </Card>
+        </Container>
+      );
 
-		case GameState.RUNNING:
-			return (
-				<div>
-					<p>game started</p>
-				</div>
-			);
+    case GameState.RUNNING:
+      return (
+        <>
+          <p>game started</p>
+          <Player />
+          <Target />
+        </>
+      );
 
-		case GameState.FINISHED:
-			return (
-				<div>
-					<p>game FINISHED</p>
-				</div>
-			);
+    case GameState.FINISHED:
+      return (
+        <Container>
+          <Card>
+            <Title>over</Title>
+            <button onClick={onClickStart}>Again</button>
+          </Card>
+        </Container>
+      );
 
-		default:
-			throw new Error('Game is not in a valid state');
-	}
+    default:
+      throw new Error('Game is not in a valid state');
+  }
 };
 
 export default observer(Main);

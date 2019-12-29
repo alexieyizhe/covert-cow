@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'preact/hooks';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-import { useAppStore } from '../store';
+import { useAppStore } from 'store';
 
 /**
  * Component

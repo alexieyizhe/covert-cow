@@ -3,7 +3,8 @@ import { useComputed, observer } from 'mobx-react-lite';
 import { styled } from 'goober';
 import { action } from 'mobx';
 
-import { useAppStore, GameState } from '../store';
+import { useAppStore, GameState } from 'store';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 const TARGET_RADIUS = 50;
 
@@ -27,6 +28,7 @@ const Indicator = styled('div')(({ x, y }) => ({
  */
 const Target = () => {
   const store = useAppStore();
+  const curWindowSize = useWindowSize();
 
   /**
    * Check if the player is within range of the target.
@@ -58,15 +60,12 @@ const Target = () => {
   /**
    * Update window size on resize so that target stays in viewport.
    */
-  useEffect(() => {
-    const onResize = action(() => {
-      store.windowSize = [window.innerWidth, window.innerHeight];
-    });
-
-    window.addEventListener('resize', onResize);
-
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  useEffect(
+    action(() => {
+      store.windowSize = curWindowSize;
+    }),
+    [curWindowSize]
+  );
 
   return isTargetFound ? ( // only show target if within range
     <Indicator

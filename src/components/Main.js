@@ -2,10 +2,10 @@ import { styled } from 'goober';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-import { GameState, useAppStore } from '../store';
-import Player from './Player';
-import Target from './Target';
-import Card from './Card';
+import { GameState, useAppStore } from 'store';
+import Player from 'components/Player';
+import Target from 'components/Target';
+import Card from 'components/Card';
 
 /**
  * Styles

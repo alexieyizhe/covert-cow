@@ -1,6 +1,7 @@
-let soundBuffer = null;
-let soundLoaded = false;
-const COW_MP3 = '/assets/sounds/0.mp3';
+const SOUND_PATH = '/assets/sounds/';
+const sounds = new Array(12)
+  .fill(0)
+  .map(() => ({ buffer: null, loaded: false }));
 
 export let audioCtx;
 export let audioGainNode;
@@ -13,27 +14,33 @@ try {
   console.error('Web Audio API is not supported in this browser!');
 }
 
-const request = new XMLHttpRequest();
-request.open('GET', COW_MP3, true);
-request.responseType = 'arraybuffer';
+/**
+ * Load all the sounds
+ */
+sounds.forEach((val, i) => {
+  const request = new XMLHttpRequest();
+  const url = `${SOUND_PATH}${i}.mp3`;
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
 
-// Decode asynchronously
-request.onload = () => {
-  audioCtx.decodeAudioData(request.response, buffer => {
-    soundBuffer = buffer;
-    soundLoaded = true;
-  });
-};
-request.send();
+  // Decode asynchronously
+  request.onload = () => {
+    audioCtx.decodeAudioData(request.response, buffer => {
+      val.buffer = buffer;
+      val.loaded = true;
+    });
+  };
+  request.send();
+});
 
-export const playSound = panner => {
-  if (!soundLoaded) {
+export const playSound = (panner, fileIdx) => {
+  if (!sounds[fileIdx].loaded) {
     console.error('Sound not loaded!');
     return false;
   }
 
   let source = audioCtx.createBufferSource(); // creates a sound source
-  source.buffer = soundBuffer; // tell the source which sound to play
+  source.buffer = sounds[fileIdx].buffer; // tell the source which sound to play
   source
     .connect(audioGainNode)
     .connect(panner)

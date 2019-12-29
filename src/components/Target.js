@@ -108,9 +108,13 @@ const Target = () => {
           Math.max(curWindowSize[0], curWindowSize[1])) *
           3) **
         4;
-      audioGainNode.gain.value = Math.min(70, Math.max(10, soundVal)); // clamp between 70 and 10
+      const clampedVal = Math.min(70, Math.max(10, soundVal)); // clamp between 70 and 10
+      const soundFileToPlay = Math.round(soundVal / 7);
 
-      playSound(audioPanner.current);
+      console.log(soundVal, soundFileToPlay);
+      audioGainNode.gain.value = clampedVal;
+
+      playSound(audioPanner.current, soundFileToPlay);
     }, 400);
 
     return () => clearInterval(interval);

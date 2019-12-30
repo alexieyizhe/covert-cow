@@ -22,11 +22,7 @@ const Container = styled('footer')`
 const Footer = () => (
   <Container>
     <span>a game by </span>
-    <a
-      href="https://github.com/alexieyizhe"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <a href="https://alexxie.ca" target="_blank" rel="noopener noreferrer">
       alex
     </a>
   </Container>

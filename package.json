@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "cow-game",
+  "homepage": "http://alexieyizhe.github.io/covertcow",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -8,11 +9,14 @@
     "build": "preact build --no-prerender",
     "serve": "preact build --no-prerender && preact serve",
     "dev": "preact watch",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-config-synacor": "^3.0.4",
+    "gh-pages": "^2.1.1",
     "if-env": "^1.0.0",
     "preact-cli": "^3.0.0-rc.6"
   },

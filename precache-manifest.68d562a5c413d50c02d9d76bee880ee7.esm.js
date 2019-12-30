@@ -23,14 +23,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/invisiblecow.jpg"
   },
   {
-    "revision": "f699c50a75c5e0e7b4276de99aa6f17e",
-    "url": "/bundle.6a1c0.esm.js"
+    "revision": "b9e5e5c838fbb72fa5c84e1f4ff3ed6e",
+    "url": "/bundle.72ff7.esm.js"
   },
   {
     "url": "/d80f8608e38f1a27adf76a82298bb80f.jpg"
   },
   {
-    "revision": "6e7493f16bce6d449c72e41c064ac493",
+    "revision": "6bf9625ec1aedabaaffc331e7f926f95",
     "url": "/index.html"
   },
   {

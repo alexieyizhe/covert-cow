@@ -21,6 +21,8 @@
     "mobx": "^5.15.1",
     "mobx-react-lite": "^1.5.2",
     "preact": "^10.1.0",
-    "preact-render-to-string": "^5.1.2"
+    "preact-render-to-string": "^5.1.2",
+    "wired-button": "^2.0.0",
+    "wired-card": "^2.0.0"
   }
 }

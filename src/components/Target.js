@@ -21,8 +21,8 @@ const Indicator = styled('div')(({ x, y }) => ({
   height: `${TARGET_RADIUS * 2}px`,
   borderRadius: '50%',
   cursor: 'pointer',
-  transform: `translate(${x - TARGET_RADIUS}px, ${y - TARGET_RADIUS}px)`,
-  backgroundColor: 'red' // TODO: remove this
+  zIndex: 2,
+  transform: `translate(${x - TARGET_RADIUS}px, ${y - TARGET_RADIUS}px)`
 }));
 
 /**

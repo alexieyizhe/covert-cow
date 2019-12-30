@@ -7,9 +7,15 @@ import Main from 'components/Main';
 setPragma(h);
 
 const App = () => (
-  <AppStoreProvider>
-    <Main />
-  </AppStoreProvider>
+  <>
+    <link
+      href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap"
+      rel="stylesheet"
+    />
+    <AppStoreProvider>
+      <Main />
+    </AppStoreProvider>
+  </>
 );
 
 export default App;

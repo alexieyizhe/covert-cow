@@ -1,14 +1,20 @@
 import { styled } from 'goober';
+import 'wired-card';
 
-const Container = styled('span')`
-  display: inline-block;
-  margin: auto;
-  padding: 15px 20px;
+const CardContents = styled('div')`
+  position: relative;
+  width: 100%;
+  height: 100%;
 
-  text-align: center;
-  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const Card = ({ children }) => <Container>{children}</Container>;
+const Card = ({ children }) => (
+  <wired-card elevation="2">
+    <CardContents>{children}</CardContents>
+  </wired-card>
+);
 
 export default Card;

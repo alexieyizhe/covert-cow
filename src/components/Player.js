@@ -1,9 +1,23 @@
-import { useEffect, useRef } from 'preact/hooks';
+import { styled } from 'goober';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import { useAppStore } from 'store';
 import { audioCtx } from 'audio';
+
+/**
+ * Styles
+ */
+const Tip = styled('span')(({ show }) => ({
+  transition: 'opacity 300ms',
+  opacity: show ? 0.8 : 0,
+
+  position: 'relative',
+  margin: 'auto',
+  zIndex: -1,
+  fontFamily: 'Comic Sans MS, sans-serif'
+}));
 
 /**
  * Component
@@ -12,6 +26,7 @@ const Player = () => {
   const store = useAppStore();
 
   const internalMousePos = useRef([0, 0]);
+  const [showTip, setShowTip] = useState(true);
 
   /**
    * Compute cursor position to update internal player position.
@@ -34,6 +49,8 @@ const Player = () => {
       ];
 
       internalMousePos.current = curMousePos;
+
+      setShowTip(false);
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -62,9 +79,13 @@ const Player = () => {
   }, []);
 
   return (
-    <div>
-      x: {store.playerPos[0]} y: {store.playerPos[1]}
-    </div>
+    <Tip
+      show={showTip}
+      x={internalMousePos.current[0]}
+      y={internalMousePos.current[1]}
+    >
+      MOOve your mouse!
+    </Tip>
   );
 };
 

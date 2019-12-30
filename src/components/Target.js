@@ -5,9 +5,9 @@ import { action, computed } from 'mobx';
 
 import { useAppStore, GameState } from 'store';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { audioCtx, audioGainNode, playSound } from 'audio';
+import { audioCtx, audioGainNode, playSound, NUM_SOUND_LEVELS } from 'audio';
 
-const TARGET_RADIUS = 35;
+const TARGET_RADIUS = 40;
 const TARGET_Z_POS = 300;
 
 /**
@@ -102,16 +102,18 @@ const Target = () => {
    */
   useEffect(() => {
     const interval = setInterval(() => {
-      const largestDimension = Math.max(curWindowSize[0], curWindowSize[1]);
-      const soundVal =
-        (((largestDimension - playerTargetDistance.get()) / largestDimension) *
-          3) **
-        4;
-      const clampedVal = Math.min(70, Math.max(10, soundVal)); // clamp between 70 and 10
-      const soundFileToPlay = Math.round(soundVal / 7);
+      const percentageDistFromTarget = Math.exp(
+        (Math.E - playerTargetDistance.get()) / 500
+      );
+      const soundFileToPlay = Math.floor(
+        percentageDistFromTarget * NUM_SOUND_LEVELS
+      );
+      const clampedGainValue = Math.min(11, Math.max(1, soundFileToPlay));
 
-      audioGainNode.gain.value = clampedVal;
+      // set gain value to increase as player gets closer to target
+      audioGainNode.gain.value = clampedGainValue;
 
+      // play the sound
       playSound(audioPanner.current, soundFileToPlay);
     }, 400);
 

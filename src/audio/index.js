@@ -1,5 +1,6 @@
 const SOUND_PATH = '/assets/sounds/';
-const sounds = new Array(12)
+export const NUM_SOUND_LEVELS = 12; // 0 to 11 inclusive
+const sounds = new Array(NUM_SOUND_LEVELS)
   .fill(0)
   .map(() => ({ buffer: null, loaded: false }));
 

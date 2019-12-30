@@ -16,6 +16,9 @@ export const createStore = () => ({
   playerPos: [0, 0],
   targetRelativePos: [-1, -1],
   windowSize: [window.innerWidth, window.innerHeight],
+  curTimeSeconds: Infinity,
+  bestTimeSeconds: Infinity,
+  totScore: 0,
 
   get targetPos() {
     return [

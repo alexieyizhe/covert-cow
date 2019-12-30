@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "cow-game",
-  "homepage": "http://alexieyizhe.github.io/covertcow",
+  "name": "covert-cow",
+  "homepage": "http://alexieyizhe.github.io/covert-cow",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {

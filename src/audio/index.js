@@ -5,8 +5,11 @@ const sounds = new Array(12)
 
 export let audioCtx;
 export let audioGainNode;
+
+/**
+ * Instantiate the audio instances.
+ */
 try {
-  // Fix up for prefixing
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   audioCtx = new AudioContext();
   audioGainNode = audioCtx.createGain();
@@ -15,7 +18,7 @@ try {
 }
 
 /**
- * Load all the sounds
+ * Pre-load all the sounds that we'll need to play.
  */
 sounds.forEach((val, i) => {
   const request = new XMLHttpRequest();
@@ -33,6 +36,9 @@ sounds.forEach((val, i) => {
   request.send();
 });
 
+/**
+ * Plays the specified sound.
+ */
 export const playSound = (panner, fileIdx) => {
   if (!sounds[fileIdx].loaded) {
     console.error('Sound not loaded!');

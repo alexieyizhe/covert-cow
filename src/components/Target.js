@@ -7,7 +7,7 @@ import { useAppStore, GameState } from 'store';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { audioCtx, audioGainNode, playSound } from 'audio';
 
-const TARGET_RADIUS = 50;
+const TARGET_RADIUS = 35;
 const TARGET_Z_POS = 300;
 
 /**
@@ -73,7 +73,7 @@ const Target = () => {
   );
 
   /**
-   * Set up audio source
+   * Set up audio source and directional panner node.
    */
   useEffect(() => {
     const listener = audioCtx.listener;
@@ -87,7 +87,7 @@ const Target = () => {
       positionZ: TARGET_Z_POS,
       orientationX: 0,
       orientationY: 0,
-      orientationZ: -1, // have the audio source facing the user
+      orientationZ: -1, // have the audio source face the user
       refDistance: 1,
       maxDistance: 10000,
       rolloffFactor: 100,
@@ -102,16 +102,14 @@ const Target = () => {
    */
   useEffect(() => {
     const interval = setInterval(() => {
+      const largestDimension = Math.max(curWindowSize[0], curWindowSize[1]);
       const soundVal =
-        (((Math.max(curWindowSize[0], curWindowSize[1]) -
-          playerTargetDistance.get()) /
-          Math.max(curWindowSize[0], curWindowSize[1])) *
+        (((largestDimension - playerTargetDistance.get()) / largestDimension) *
           3) **
         4;
       const clampedVal = Math.min(70, Math.max(10, soundVal)); // clamp between 70 and 10
       const soundFileToPlay = Math.round(soundVal / 7);
 
-      console.log(soundVal, soundFileToPlay);
       audioGainNode.gain.value = clampedVal;
 
       playSound(audioPanner.current, soundFileToPlay);

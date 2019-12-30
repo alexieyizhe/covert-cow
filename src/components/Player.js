@@ -55,7 +55,7 @@ const Player = () => {
         listener.positionX.value = internalMousePos.current[0];
         listener.positionY.value = internalMousePos.current[1];
       }),
-      500
+      400
     );
 
     return () => clearInterval(playerUpdater);

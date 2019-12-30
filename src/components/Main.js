@@ -9,8 +9,8 @@ import Player from 'components/Player';
 import Target from 'components/Target';
 import Footer from 'components/Footer';
 
-import Cow from 'assets/images/cow.jpg';
-import InvisibleCow from 'assets/images/invisiblecow.jpg';
+import Cow from 'assets/cow.jpg';
+import InvisibleCow from 'assets/invisiblecow.jpg';
 
 /**
  * Styles

@@ -10,25 +10,6 @@
     "dev": "preact watch",
     "lint": "eslint src"
   },
-  "eslintConfig": {
-    "extends": "eslint-config-synacor",
-    "rules": {
-      "indent": [
-        "warn",
-        2,
-        {
-          "SwitchCase": 1
-        }
-      ],
-      "react/jsx-indent-props": [
-        2,
-        2
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "build/*"
-  ],
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-config-synacor": "^3.0.4",

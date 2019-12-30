@@ -3,6 +3,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import { useAppStore } from 'store';
+import { audioCtx } from 'audio';
 
 /**
  * Component
@@ -46,9 +47,15 @@ const Player = () => {
   useEffect(() => {
     const playerUpdater = setInterval(
       action(() => {
+        // update player position
         store.playerPos = internalMousePos.current;
+
+        // update audio listener position to reflect new player position
+        const listener = audioCtx.listener;
+        listener.positionX.value = internalMousePos.current[0];
+        listener.positionY.value = internalMousePos.current[1];
       }),
-      1000
+      400
     );
 
     return () => clearInterval(playerUpdater);

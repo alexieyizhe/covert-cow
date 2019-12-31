@@ -9,6 +9,7 @@
       }
     ],
     "react/jsx-indent-props": [2, 2],
-    "brace-style": ["error", "1tbs"]
+    "brace-style": ["error", "1tbs"],
+    "no-alert": "off"
   }
 }

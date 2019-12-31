@@ -5,7 +5,7 @@ import Card from 'components/Card';
 import Image from 'components/Image';
 import Title from 'components/Title';
 import Desc from 'components/Desc';
-import InvisibleCow from 'assets/invisiblecow.jpg';
+import CovertCow from 'assets/invisiblecow.jpg';
 
 const Start = () => {
   const store = useAppStore();
@@ -16,8 +16,8 @@ const Start = () => {
 
   return (
     <Card>
-      <Image src={InvisibleCow} />
-      <Title>hello i am the invisible cow</Title>
+      <Image src={CovertCow} />
+      <Title>hello i am a covert cow</Title>
       <wired-button onClick={onClickStart}>find me</wired-button>
       <Desc>make sure your sound is on. best enjoyed with headphones!</Desc>
     </Card>

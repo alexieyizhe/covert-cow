@@ -1,4 +1,4 @@
-const SOUND_PATH = '/assets/sounds/';
+const SOUND_PATH = `${process.env.PUBLIC_PATH}/assets/sounds/`;
 export const NUM_SOUND_LEVELS = 12; // 0 to 11 inclusive
 const sounds = new Array(NUM_SOUND_LEVELS)
   .fill(0)
@@ -15,7 +15,7 @@ try {
   audioCtx = new AudioContext();
   audioGainNode = audioCtx.createGain();
 } catch (e) {
-  console.error('Web Audio API is not supported in this browser!');
+  alert('Web Audio API is not supported in this browser!');
 }
 
 /**

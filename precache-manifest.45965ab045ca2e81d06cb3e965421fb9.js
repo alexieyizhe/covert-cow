@@ -30,7 +30,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/covert-cow/d80f8608e38f1a27adf76a82298bb80f.jpg"
   },
   {
-    "revision": "a386f5c0c86c982d70a707b06f797633",
+    "revision": "b5d032baf86b11cac73aa9cd93f82c57",
     "url": "/covert-cow/index.html"
   },
   {
@@ -42,7 +42,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/covert-cow/sw-debug.js"
   },
   {
-    "revision": "5db3a51fd775206b133c4dbbff04bd25",
+    "revision": "c172c9249c1366dd307357d88758aadb",
     "url": "/covert-cow/sw-esm.js"
   },
   {
